@@ -48,12 +48,12 @@ public class GravityThread extends Thread {
     volatile static double[] ay = new double[N];
     volatile static double[] az = new double[N];
 
-    public static long startTime;
+    public static long startTime; // will be called by threads later on
 
     public static void main(String args[]) throws Exception {
 
+        // generate stars in the galaxy initial pos and angular velocity 
     	GenerateGalaxy();
-        // end of simulation generation init 
 
         // create threads
         GravityThread[] threads = new GravityThread[THREADS];
