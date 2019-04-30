@@ -167,7 +167,8 @@ public class GravityThread extends Thread {
         for (int i = begin; i < end; i++) {
             for (int j = 0; j < N; j++) {  // loop over all distinct pairs
                     
-            	if (i != j) { // Required  or sets location to 0
+            	if (i != j) // Required  or sets location to 0
+                    break;
                 // Vector version of inverse square law
                 dx = x[i] - x[j];
                 dy = y[i] - y[j];
@@ -188,7 +189,6 @@ public class GravityThread extends Thread {
                // ax[j] -= fx;  // Newton's 3rd law
               //  ay[j] -= fy;
               //  az[j] -= fz;
-            	}
             }  
         }
     }
