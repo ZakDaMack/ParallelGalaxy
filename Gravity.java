@@ -1,4 +1,5 @@
 
+
 /*
  * "Physics" part of code adapted from Dan Schroeder's applet at:
  *
@@ -31,7 +32,7 @@ public class Gravity {
 
     // Display
 
-    final static int WINDOW_SIZE = 1000 ;
+    final static int WINDOW_SIZE = 800 ;
     final static int DELAY = 0 ;
     final static int OUTPUT_FREQ = 5 ;
 
@@ -69,13 +70,6 @@ public class Gravity {
         ny *= norm;
         nz *= norm;
 
-        
-
-        // ... or just rotate in x, y plane
-        //double nx = 0, ny = 0, nz = 1.0 ;
-
-        // ... or just rotate in x, z plane
-        //double nx = 0, ny = 1.0, nz = 0 ;
 
         for(int i = 0 ; i < N ; i++) {
 
@@ -102,12 +96,6 @@ public class Gravity {
         long startTime = System.currentTimeMillis();
         while(iter < 2000) {
 
-            if(iter % OUTPUT_FREQ == 0) {
-                System.out.println("iter = " + iter + ", time = " + iter * DT) ;
-                display.repaint() ;
-                Thread.sleep(DELAY) ;
-            }
-
             // Verlet integration:
             // http://en.wikipedia.org/wiki/Verlet_integration#Velocity_Verlet
 
@@ -133,11 +121,18 @@ public class Gravity {
                 vz[i] += (az[i] * dtOver2);
             }
 
+            if(iter % OUTPUT_FREQ == 0) {
+                System.out.println("iter = " + iter + ", time = " + iter * DT) ;
+                display.repaint() ;
+                //Thread.sleep(DELAY) ;
+            }
+            
             iter++ ;
         }
         
         long elapsedTime = System.currentTimeMillis() - startTime;
         System.out.println("ElapsedTime = " + elapsedTime + "ms");
+        System.exit(0);
     }
 
     // Compute accelerations of all stars from current positions:
@@ -210,6 +205,11 @@ public class Gravity {
             g.fillRect(0, 0, WINDOW_SIZE, WINDOW_SIZE) ;
             g.setColor(Color.WHITE) ;
             for(int i = 0 ; i < N ; i++) {
+                if (i <= 1000)  
+                    g.setColor(Color.RED) ;
+                else         
+                    g.setColor(Color.WHITE) ;
+                
                 int gx = (int) (SCALE * x [i]) ;
                 int gy = (int) (SCALE * y [i]) ;
                 if(0 <= gx && gx < WINDOW_SIZE && 0 < gy && gy < WINDOW_SIZE) { 
