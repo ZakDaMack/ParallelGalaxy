@@ -39,7 +39,7 @@ public class GravityAparapi {
     // Display
     final static int WINDOW_SIZE = 800;
     final static int DELAY = 0;
-    final static int OUTPUT_FREQ = 25;
+    final static int OUTPUT_FREQ = 1;
 
     // non final static variables are not supported, will have to init and make during execution
     // Star positions
@@ -59,19 +59,19 @@ public class GravityAparapi {
     public static void main(String args[]) throws Exception {
         
         // Star positions
-        double[] x = new double[N];
-        double[] y = new double[N];
-        double[] z = new double[N];
+        final double[] x = new double[N];
+        final double[] y = new double[N];
+        final double[] z = new double[N];
 
         // Star velocities
-        double[] vx = new double[N];
-        double[] vy = new double[N];
-        double[] vz = new double[N];
+        final double[] vx = new double[N];
+        final double[] vy = new double[N];
+        final double[] vz = new double[N];
 
         // Star accelerations
-        double[] ax = new double[N];
-        double[] ay = new double[N];
-        double[] az = new double[N];
+        final double[] ax = new double[N];
+        final double[] ay = new double[N];
+        final double[] az = new double[N];
         
         // generate stars in the galaxy initial pos and angular velocity
         double nx = 2 * Math.random() - 1;
@@ -111,6 +111,8 @@ public class GravityAparapi {
         Kernel kernel = new Kernel() {
             @Override
             public void run() {
+            	@Local
+            	int[] localBuffer = new int[N];
                 int globalid = getGlobalId();
 
                 double dx, dy, dz;  // separations in x and y directions
@@ -151,8 +153,8 @@ public class GravityAparapi {
 
         };                
         
-        //Range range = Range.create(N);
-        Range range = gpu.createRange(N);
+        Range range = Range.create(N, 250);
+        //Range range = gpu.createRange(N);
 
         long startTime = System.currentTimeMillis();
                // Thread.sleep(10000);
@@ -196,6 +198,7 @@ public class GravityAparapi {
 
             iter++;
         }
+        System.out.println(kernel.getExecutionMode());
 
         long elapsedTime = System.currentTimeMillis() - startTime;
 
