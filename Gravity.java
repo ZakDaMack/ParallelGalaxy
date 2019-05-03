@@ -1,5 +1,4 @@
 
-
 /*
  * "Physics" part of code adapted from Dan Schroeder's applet at:
  *
@@ -205,10 +204,10 @@ public class Gravity {
             g.fillRect(0, 0, WINDOW_SIZE, WINDOW_SIZE) ;
             g.setColor(Color.WHITE) ;
             for(int i = 0 ; i < N ; i++) {
-                if (i <= 1000)  
-                    g.setColor(Color.RED) ;
-                else         
-                    g.setColor(Color.WHITE) ;
+//                if (i <= 1000)  
+//                    g.setColor(Color.RED) ;
+//                else         
+//                    g.setColor(Color.WHITE) ;
                 
                 int gx = (int) (SCALE * x [i]) ;
                 int gy = (int) (SCALE * y [i]) ;
