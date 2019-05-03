@@ -16,7 +16,7 @@ public class GravityThread extends Thread {
     static Display display = new Display();
     // Size of simulation
 
-    final static int N = 2000;  // Number of "stars"
+    final static int N = 6000;  // Number of "stars"
     final static double BOX_WIDTH = 100.0;
 
     // Initial state
@@ -31,22 +31,22 @@ public class GravityThread extends Thread {
     // Display
     final static int WINDOW_SIZE = 800;
     final static int DELAY = 0;
-    final static int OUTPUT_FREQ = 5;
+    final static int OUTPUT_FREQ = 25;
 
     // Star positions
-    volatile static double[] x = new double[N];
-    volatile static double[] y = new double[N];
-    volatile static double[] z = new double[N];
+    static double[] x = new double[N];
+    static double[] y = new double[N];
+    static double[] z = new double[N];
 
     // Star velocities
-    volatile static double[] vx = new double[N];
-    volatile static double[] vy = new double[N];
-    volatile static double[] vz = new double[N];
+    static double[] vx = new double[N];
+    static double[] vy = new double[N];
+    static double[] vz = new double[N];
 
     // Star accelerations
-    volatile static double[] ax = new double[N];
-    volatile static double[] ay = new double[N];
-    volatile static double[] az = new double[N];
+    static double[] ax = new double[N];
+    static double[] ay = new double[N];
+    static double[] az = new double[N];
 
     public static long startTime; // will be called by threads later on
 
@@ -83,6 +83,7 @@ public class GravityThread extends Thread {
         try {
             Thread.sleep(DELAY);
         } catch (InterruptedException ex) {
+            System.out.println("SLEEP EXCEPTION!");
            System.exit(1);
         }
     }
@@ -91,6 +92,7 @@ public class GravityThread extends Thread {
         try {
             Barrier.await();
         } catch (BrokenBarrierException | InterruptedException ex) {
+            System.out.println("BARRIER EXCEPTION!");
             System.exit(1);
         }
     }
@@ -105,11 +107,11 @@ public class GravityThread extends Thread {
         int End = Begin + b ;
         
         // try sync after position updates as different stages require surrounding parts
-        System.out.println("thread " + me + " start: " + Begin + " end: " + End);
+        //System.out.println("thread " + me + " start: " + Begin + " end: " + End);
         
         while (iter < 2000) { 
             if (me == 0 && iter % OUTPUT_FREQ == 0) {
-                //System.out.println("iter = " + iter + ", time = " + iter * DT);
+                System.out.println("iter = " + iter + ", time = " + iter * DT);
                 display.repaint();
             }
             
@@ -249,7 +251,7 @@ public class GravityThread extends Thread {
             for (int i = 0; i < N; i++) {
             	
             	// choose colour based on thread
-            	g.setColor(Color.WHITE);
+                // comment out to keep white
             	//g.setColor(GetThreadColour(i));
             	               
                 int gx = (int) (SCALE * x[i]);
